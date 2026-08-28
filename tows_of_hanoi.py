@@ -2,7 +2,10 @@ import pygame as py
 from sys import exit
 from colorama import init, Fore, Style
 
-class Colors:
+init()
+py.init()
+
+class Color:
     BLUE = (0, 85, 255)
     DARK_BLUE = (0, 3, 182)
     WHITE = (255, 255, 255)
@@ -10,28 +13,29 @@ class Colors:
     GREEN = (181, 255, 217)
     BLACK = (0, 0, 0)
 
-init()
+def decor(text: str, method = Fore.LIGHTBLUE_EX) -> str:
+    chain = [method, text, Style.RESET_ALL]
+    return ''.join(chain)
 
-print(fr"""{Fore.BLUE}
-  _____                                          __                               _
- /__   \ ___ __      __ ___  _ __  ___    ___   / _|   /\  /\ __ _  _ __    ___  (_)
-   / /\// _ \\ \ /\ / // _ \| '__|/ __|  / _ \ | |_   / /_/ // _` || '_ \  / _ \ | |
-  / /  | (_) |\ V  V /|  __/| |   \__ \ | (_) ||  _| / __  /| (_| || | | || (_) || |
-  \/    \___/  \_/\_/  \___||_|   |___/  \___/ |_|   \/ /_/  \__,_||_| |_| \___/ |_|
--------------------------------------------------------------------------------------
-Version: 2.0.0
+print(fr"""{Fore.LIGHTBLUE_EX}
+   _____                              ___    _____             _
+  |_   _|___ _ _ _ ___ ___ ___    ___|  _|  |  |  |___ ___ ___|_|
+    | | | . | | | | -_|  _|_ -|  | . |  _|  |     | .'|   | . | |
+    |_| |___|_____|___|_| |___|  |___|_|    |__|__|__,|_|_|___|_|
+  ---------------------------------------------------------------
+Version: 2.1.1
 By: Jasiel{Fore.RESET}
 
-Start by choosing a {Fore.BLUE}number of disks{Fore.RESET}, between {Style.BRIGHT}1{Style.RESET_ALL} and {Style.BRIGHT}20{Style.RESET_ALL}.""")
-try:
-	total = int(input('>>> '))
-	if total < 1 or total > 20:
-		raise ValueError
-except:
-	total = None
-	print('\n# Please enter a VALID number!')
+Start by choosing a {decor('number of disks')}, between {decor('1', Style.BRIGHT)} and {decor('13', Style.BRIGHT)}.""")
+total = input('>>> ')
 
-py.init()
+try:
+    total = int(total)
+    if total < 1 or total > 13:
+        raise ValueError
+except:
+    total = 5
+    print('\n[Err] Please enter a VALID number!')
 
 # Screen dimensions
 SCR_WIDTH = 800
@@ -42,7 +46,7 @@ screen = py.display.set_mode((SCR_WIDTH, SCR_HEIGHT))
 py.display.set_caption('Towers of Hanoi')
 
 # total of disks
-DISK_TOTAL = total or 5
+DISK_TOTAL = total
 MIN_MOVES = 2 ** DISK_TOTAL - 1
 
 # Tower, disk and reset parameters
@@ -82,7 +86,7 @@ towers = [[i for i in range(DISK_TOTAL, 0, -1)],[],[]]
 placeholder = []
 
 # main functions for drawing or rendering disks and text
-def render_Text(font: py.font.Font, text: str, surface_position: tuple, color: tuple = Colors.BLACK,
+def render_Text(font: py.font.Font, text: str, surface_position: tuple, color: tuple = Color.BLACK,
 		align: str = 'topleft', get_rect: bool = False, antialias: bool = True) -> py.Rect:
 
 	surface = font.render(text, antialias, color)
@@ -98,8 +102,8 @@ def drawPlaceholder(stack: int, tower_position: py.Rect):
 	disk_size_factor = DISK_SIZE * stack
 	disk_X = tower_position.left + (TOWER_WIDTH - disk_size_factor) // 2
 
-	disk = py.draw.rect(screen, Colors.BLUE, (disk_X, TOWER_BASE // 2, disk_size_factor, DISK_SIZE), 0, DISK_RADIUS)
-	py.draw.rect(screen, Colors.DARK_BLUE, disk, BORDER_WIDTH, DISK_RADIUS)
+	disk = py.draw.rect(screen, Color.BLUE, (disk_X, TOWER_BASE // 2, disk_size_factor, DISK_SIZE), 0, DISK_RADIUS)
+	py.draw.rect(screen, Color.DARK_BLUE, disk, BORDER_WIDTH, DISK_RADIUS)
 
 """ TODO:
 Cambiar el uso de la posicion x de la torre para calcular la distancia de los discos por un rect acomodado en el centro basado en los valores de la torre
@@ -114,8 +118,8 @@ def drawDisks(stack: list, tower_position: py.Rect):
 		disk_X = tower_position + (TOWER_WIDTH - disk_size_factor) // 2
 		disk_Y = SCR_HEIGHT - distance_factor
 
-		disk = py.draw.rect(screen, Colors.BLUE, (disk_X, disk_Y, disk_size_factor, DISK_SIZE), 0, DISK_RADIUS)
-		py.draw.rect(screen, Colors.DARK_BLUE, disk, BORDER_WIDTH, DISK_RADIUS)
+		disk = py.draw.rect(screen, Color.BLUE, (disk_X, disk_Y, disk_size_factor, DISK_SIZE), 0, DISK_RADIUS)
+		py.draw.rect(screen, Color.DARK_BLUE, disk, BORDER_WIDTH, DISK_RADIUS)
 
 # Function for positioning the disks
 def takeDiskFromTower(index: int) -> bool:
@@ -146,17 +150,17 @@ def placeDiskInTower(index: int) -> tuple[bool, int]:
 move_count = 0
 
 def main():
-	screen.fill(Colors.WHITE)
+	screen.fill(Color.WHITE) #
 
-	reset_bg = py.draw.rect(screen, Colors.BLUE, RESET_RECT, 0, 11)
+	reset_bg = py.draw.rect(screen, Color.BLUE, RESET_RECT, 0, 11)
 
 	min_moves_text = render_Text(MAIN_FONT, f'Best: {MIN_MOVES}', (20, 10), get_rect=True)
 	render_Text(MAIN_FONT, f'Move count: {move_count}', min_moves_text.bottomleft)
-	render_Text(RESET_FONT, 'Reset', reset_bg.center, Colors.WHITE, 'center')
+	render_Text(RESET_FONT, 'Reset', reset_bg.center, Color.WHITE, 'center')
 
 	for i in range(3):
-		py.draw.rect(screen, Colors.GREEN, TRIGGER_POSITIONS[i])
-		py.draw.rect(screen, Colors.BROWN, TOWER_POSITIONS[i])
+		py.draw.rect(screen, Color.GREEN, TRIGGER_POSITIONS[i])
+		py.draw.rect(screen, Color.BROWN, TOWER_POSITIONS[i])
 
 		drawDisks(towers[i], TOWER_POSITIONS[i].left)
 
@@ -165,17 +169,17 @@ def main():
 	if any(len(towers[i]) == DISK_TOTAL for i in range(1, 3)):
 		w1, w2 = "That's a perfect score!", 'You achieved to solve it!'
 		solved_state = move_count == MIN_MOVES and w1 or w2
-		render_Text(MAIN_FONT, solved_state, (SCR_WIDTH // 2, TOWER_BASE // 2), Colors.BLUE, 'center')
+		render_Text(MAIN_FONT, solved_state, (SCR_WIDTH // 2, TOWER_BASE // 2), Color.BLUE, 'center')
 
-	py.display.flip()
+	py.display.flip() #
 
 isHolding = True
 isRunning = True
 while isRunning:
 	for event in py.event.get():
-		if event.type == py.QUIT:
+		if event.type == py.QUIT: # Quit the game
 			isRunning = False
-		elif event.type == py.MOUSEBUTTONDOWN:
+		elif event.type == py.MOUSEBUTTONDOWN: # Clicking on something
 			mouseX, mouseY = py.mouse.get_pos()
 
 			clicked_tower = -1
