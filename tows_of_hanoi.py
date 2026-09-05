@@ -5,6 +5,8 @@ from colorama import init, Fore, Style
 init()
 py.init()
 
+clock = py.Clock()
+
 
 class Color:
     BLUE = (0, 85, 255)
@@ -20,18 +22,22 @@ def decor(text: str, method=Fore.LIGHTBLUE_EX) -> str:
     return "".join(chain)
 
 
-print(
-    rf"""{Fore.LIGHTBLUE_EX}
+# Game Version/intro :::
+print(decor(r"""
    _____                              ___    _____             _
   |_   _|___ _ _ _ ___ ___ ___    ___|  _|  |  |  |___ ___ ___|_|
     | | | . | | | | -_|  _|_ -|  | . |  _|  |     | .'|   | . | |
     |_| |___|_____|___|_| |___|  |___|_|    |__|__|__,|_|_|___|_|
   ---------------------------------------------------------------
-Version: 2.1.2
-By: Jasiel{Fore.RESET}
+Version: 2.1.3
+By: Josimar M. (@josmr.py)
+"""))
 
-Start by choosing a {decor('number of disks')}, between {decor('1', Style.BRIGHT)} and {decor('13', Style.BRIGHT)}."""
-)
+lines = [decor("number of disks"), decor("1", Style.BRIGHT), decor("13", Style.BRIGHT)]
+
+print(f"Start by choosing a {lines[0]}, between {lines[1]} and {lines[2]}.")
+
+# Disk input
 total = input(">>> ")
 
 try:
@@ -40,7 +46,8 @@ try:
         raise ValueError
 except:
     total = 5
-    print("\n[Err] Please enter a VALID number!")
+    print()
+    print(decor("[Err]", Fore.RED), "Please enter a VALID number!")
 
 # Screen dimensions
 SCR_WIDTH = 800
@@ -98,7 +105,7 @@ TRIGGER_POSITIONS = list(
 
 # text and font management
 MAIN_FONT = py.font.SysFont("comic sans", 32, True)
-RESET_FONT = py.font.SysFont("snap itc", 25)
+RESET_FONT = py.font.SysFont("Arial", 25, True)
 
 towers = [[i for i in range(DISK_TOTAL, 0, -1)], [], []]
 placeholder = []
@@ -267,6 +274,7 @@ while isRunning:
                 towers[0].sort(reverse=True)
                 isHolding, move_count = True, 0
     main()
+    clock.tick(30)
 
 py.quit()
 exit()
