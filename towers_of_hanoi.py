@@ -4,8 +4,7 @@ from colorama import init, Fore, Style
 
 init()
 py.init()
-
-clock = py.Clock()
+clock = py.time.Clock()
 
 
 class Color:
@@ -29,7 +28,7 @@ print(decor(r"""
     | | | . | | | | -_|  _|_ -|  | . |  _|  |     | .'|   | . | |
     |_| |___|_____|___|_| |___|  |___|_|    |__|__|__,|_|_|___|_|
   ---------------------------------------------------------------
-Version: 2.1.3
+Version: 2.1.4
 By: Josimar M. (@josmr.py)
 """))
 

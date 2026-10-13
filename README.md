@@ -1,59 +1,88 @@
 # Towers of Hanoi
 
-## Sobre este proyecto
+![Version](https://img.shields.io/badge/version-2.1.4-3776AB)
+![Status: Archived](https://img.shields.io/badge/status-archived-lightgrey)
+[![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
+[![Pygame](https://img.shields.io/badge/game%20library-Pygame-00A86B)](https://www.pygame.org/)
 
-Este repositorio contiene una **recreación histórica e incompleta** de un juego de las Torres de Hanoi que hice en 2024 usando [Pygame](https://www.pygame.org/).
+A small interactive Towers of Hanoi game I made with Python and Pygame.
 
-La recreación se basa únicamente en lo que se pudo encontrar del proyecto original. Por ese motivo, puede no representar exactamente la versión que existía en 2024 y todavía puede contener errores, decisiones provisionales o partes sin terminar.
+This was one of my early programming projects, created while I was learning the basics of programming at school. It was later featured at my school's vocational fair.
 
-El archivo principal es `tows_of_hanoi.py`. La carpeta `old` conserva los archivos `.py` que se encontraron durante la recuperación, para no perder ese material y mantener el contexto de las versiones anteriores.
+## Features
 
-## Estado actual
+* Choose between 1 and 13 disks.
+* Move disks between three towers using the mouse.
+* Prevents illegal moves.
+* Keeps track of the current move count.
+* Shows the theoretical minimum number of moves.
+* Reset the game at any time.
+* Displays a message when the puzzle is completed.
 
-La versión recreada permite:
+The `old/` directory contains earlier versions of the project kept for reference.
 
-- Elegir entre 1 y 13 discos.
-- Mover los discos entre las tres torres con el ratón.
-- Contar los movimientos realizados.
-- Mostrar el número mínimo de movimientos posible.
-- Reiniciar la partida.
-- Indicar cuándo se ha resuelto el rompecabezas.
+## Requirements
 
-Al tratarse de una recuperación incompleta, el proyecto se conserva principalmente como referencia histórica y no como una versión final o mantenida del juego.
+* Python 3.10 or newer
+* `pygame`
+* `colorama`
 
-## Estructura
+Install the dependencies with:
+
+```bash
+python -m pip install pygame colorama
+```
+
+## Running the game
+
+Clone the repository:
+
+```bash
+git clone https://github.com/josmrpy/towers-of-hanoi.git
+cd towers-of-hanoi
+```
+
+Then run:
+
+```bash
+python towers_of_hanoi.py
+```
+
+Choose a number from `1` to `13` when prompted.
+
+## How to play
+
+Click a tower to pick up its top disk, then click another tower to place it.
+
+The game follows the classic Towers of Hanoi rules: a larger disk cannot be placed on top of a smaller one.
+
+The theoretical minimum number of moves is calculated with:
+
+```text
+2^n - 1
+```
+
+where `n` is the number of disks.
+
+## Project files
 
 ```text
 .
-├── tows_of_hanoi.py       # Recreación principal
-└── old/                   # Archivos encontrados del proyecto anterior
+├── towers_of_hanoi.py    # Current version
+└── old/                # Previous versions (removed)
     ├── __towers of hanoi.py
     ├── 2towers of hanoi.py
     └── towers of hanoi.py
 ```
 
-## Requisitos
+## About this project
 
-- Python 3
-- Pygame
-- Colorama
+This project was an early experiment with Python, graphical interfaces, user input, and implementing a classic algorithm as an interactive game.
 
-Instala las dependencias con:
+More of my projects can be found on my portfolio:
 
-```bash
-pip install pygame colorama
-```
+<https://josmrpy.github.io/>
 
-## Ejecución
+## License
 
-Desde la raíz del repositorio, ejecuta:
-
-```bash
-python tows_of_hanoi.py
-```
-
-Al iniciar, el programa solicita el número de discos. Si la entrada no es válida, utiliza 5 discos por defecto.
-
-## Nota sobre `old`
-
-Los archivos dentro de `old` se guardan como documentación y respaldo de lo que se pudo recuperar. No es necesario ejecutarlos para usar la recreación principal, y su funcionamiento puede diferir del archivo actual.
+This repository is primarily intended to showcase my work and development process. It does not currently include a separate open-source license.
